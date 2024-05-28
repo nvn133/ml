@@ -1,0 +1,42 @@
+import pandas as pd
+data=pd.read_csv('enjoysport.csv')
+data
+data1=data.drop('Example',axis=1,inplace=False)
+dataprint('Version space using candidate algorithm is ')
+n=len(data1.columns)-1
+s=n*['NULL']
+g=[]
+for i in range(len(data1)):
+    temp=list(data1.iloc[i])
+    if(temp[-1]=='Yes'):
+        for j in range(len(s)):
+            if(s[j]=='NULL'):
+                s[j]=temp[j]
+                continue
+            if(s[j]!=temp[j]):
+                s[j]='?'
+        if(g!=[]):
+            j=0
+            while(j<len(g)):
+                a=set(g[j])
+                for k in a:
+                    if(k!='?'):
+                        index_g=g[j].index(k)
+                        try:
+                            if((s.index(k)==index_g)):
+                                b=1
+                            else:
+                                g.pop(j)
+                        except:
+                            g.pop(j)
+                j=j+1  
+    else:
+        for j in range(len(s)):
+            if(s[j]!=temp[j] and s[j]!='?'):
+                temp1=n*['?']
+                temp1[j]=s[j]
+                g.append(temp1)
+                continue
+    print('general hypothesis is \n',g,end='\n')
+    print('specific hypothesis is \n',s)
+    print('\n\n')
