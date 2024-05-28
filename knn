@@ -1,0 +1,20 @@
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn import datasets
+iris=datasets.load_iris()
+X_train,X_test,y_train,y_test=train_test_split(iris.data,iris.target,test_size=0.1)
+print("Size of training data and its label",X_train.shape,y_train.shape)
+print("Size of tetsing data and its label",X_test.shape,y_test.shape)
+for i in range(len(iris.target_names)):
+    print("Label",i,"-",str(iris.target_names[i]))
+classifier=KNeighborsClassifier(n_neighbors=1)
+classifier.fit(X_train,y_train)
+y_pred=classifier.predict(X_test)
+print("Results of Classification using KNN with k=1")
+for r in range(0,len(X_test)):
+    print("Sample:",str(X_test[r]),"Actual-label:",str(y_test[r]),"Predicted-label:",str(y_pred[r]))
+print("Classification Accuracy:",classifier.score(X_test,y_test))
+from sklearn.metrics import classification_report,confusion_matrix
+print('Confusion Matrix')
+print(confusion_matrix(y_test,y_pred))
+print('Accuracy Metrics')
